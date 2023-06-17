@@ -43,3 +43,6 @@ brick.txt
 #Portal 
 50	200	160	216	180	1
 
+[TILEMAP]
+textures\world1-1.txt
+

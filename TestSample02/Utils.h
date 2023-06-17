@@ -11,6 +11,9 @@
 #include <vector>
 
 
+#include <fstream>
+#include <string>
+
 using namespace std;
 
 vector<string> split(string line, string delimeter = "\t");
