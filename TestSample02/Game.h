@@ -56,6 +56,9 @@ class CGame
 	int current_scene;
 	int next_scene = -1;
 
+	int screen_width;
+	int screen_height;
+
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
 
@@ -108,6 +111,9 @@ public:
 	
 	float GetCamX() { return cam_x; }
 	float GetCamY() { return cam_y; }
+
+	int GetScreenWidth() { return screen_width; }
+	int GetScreenHeight() { return screen_height; }
 
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	void Load(LPCWSTR gameFile);
