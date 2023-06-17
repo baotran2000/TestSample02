@@ -34,3 +34,29 @@ void Map::GetSpriteTile()
 	}
 }
 
+void Map::DrawMap()
+{
+	int FirstColumn = (int)floor(CGame::GetInstance()->GetCamX() / TILE_WIDTH);
+	int LastColumn = (int)ceil((CGame::GetInstance()->GetCamX() + CGame::GetInstance()->GetScreenWidth()) / TILE_WIDTH);
+	if (LastColumn >= NumofColMap)
+		LastColumn = NumofColMap - 1;
+	for (int CurrentRow = 0; CurrentRow < NumofRowMap; CurrentRow++) {
+		for (int CurrentColumn = 0; CurrentColumn <= LastColumn; CurrentColumn++)
+		{
+			int index = TileMapData[CurrentRow][CurrentColumn] - 1;
+			if (index < TotalTile)
+				Tiles.at(index)->Draw((float)(CurrentColumn * TILE_WIDTH), float(CurrentRow * TILE_HEIGHT));
+		}
+	}
+}
+
+
+int Map::GetMapWidth()
+{
+	return NumofColMap * TILE_WIDTH;
+}
+
+int Map::GetMapHeight()
+{
+	return NumofRowMap * TILE_HEIGHT;
+}
