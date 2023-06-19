@@ -10,7 +10,12 @@
 class CQuestionBrick :
 	public CGameObject
 {
+	float ax;
+	float ay;
 
+	float minY;
+	float startY;
+	float startX;
 public:
 	BOOLEAN isEmpty = false;
 	CQuestionBrick(float x, float y, int type);

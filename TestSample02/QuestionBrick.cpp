@@ -20,3 +20,13 @@ void CQuestionBrick::Render()
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }
+CQuestionBrick::CQuestionBrick(float x, float y, int type)
+{
+	//this->objType = type;
+
+	this->ay = 0;
+	this->ax = 0;
+	this->minY = y - QUESTION_BRICK_BBOX_HEIGHT;
+	this->startY = y;
+	this->startX = x;
+}
