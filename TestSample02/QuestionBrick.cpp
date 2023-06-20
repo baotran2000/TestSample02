@@ -22,7 +22,7 @@ void CQuestionBrick::Render()
 }
 CQuestionBrick::CQuestionBrick(float x, float y, int type)
 {
-	//this->objType = type;
+	this->objType = type;
 
 	this->ay = 0;
 	this->ax = 0;

@@ -68,6 +68,6 @@ public:
 	virtual int IsBlocking() { return 1; }
 
 	~CGameObject();
-
+	int objType = 0;
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
 };
