@@ -33,6 +33,8 @@
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
 
+#define	MARIO_RACOON_ATTACK	800
+#define	MARIO_RACOON_ATTACK_RELEASE	801
 
 #pragma region ANIMATION_ID
 
@@ -56,6 +58,31 @@
 
 #define ID_ANI_MARIO_BRACE_RIGHT 1000
 #define ID_ANI_MARIO_BRACE_LEFT 1001
+
+//RACOON MARIO
+#define ID_ANI_RACOON_MARIO_IDLE_RIGHT 3400
+#define ID_ANI_RACOON_MARIO_IDLE_LEFT 3401
+
+#define ID_ANI_RACOON_MARIO_WALKING_RIGHT 3500
+#define ID_ANI_RACOON_MARIO_WALKING_LEFT 3501
+
+#define ID_ANI_RACOON_MARIO_RUNNING_RIGHT 3600
+#define ID_ANI_RACOON_MARIO_RUNNING_LEFT 3601
+
+#define ID_ANI_RACOON_MARIO_JUMP_WALK_RIGHT 3700
+#define ID_ANI_RACOON_MARIO_JUMP_WALK_LEFT 3701
+
+#define ID_ANI_RACOON_MARIO_JUMP_RUN_RIGHT 3800
+#define ID_ANI_RACOON_MARIO_JUMP_RUN_LEFT 3801
+
+#define ID_ANI_RACOON_MARIO_SIT_RIGHT 3900
+#define ID_ANI_RACOON_MARIO_SIT_LEFT 3901
+
+#define ID_ANI_RACOON_MARIO_BRACE_RIGHT 3100
+#define ID_ANI_RACOON_MARIO_BRACE_LEFT 3101
+
+#define ID_ANI_RACOON_MARIO_ATTACK_FROM_LEFT 3200
+#define ID_ANI_RACOON_MARIO_ATTACK_FROM_RIGHT 3201
 
 #define ID_ANI_MARIO_DIE 999
 
@@ -88,10 +115,14 @@
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
 
+#define MARIO_LEVEL_RACOON 4
+
 #define MARIO_BIG_BBOX_WIDTH  14
 #define MARIO_BIG_BBOX_HEIGHT 24
 #define MARIO_BIG_SITTING_BBOX_WIDTH  14
 #define MARIO_BIG_SITTING_BBOX_HEIGHT 16
+
+#define MARIO_RACOON_BBOX_WIDTH 16
 
 #define MARIO_SIT_HEIGHT_ADJUST ((MARIO_BIG_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 
@@ -125,6 +156,8 @@ class CMario : public CGameObject
 	int GetAniIdBig();
 	int GetAniIdSmall();
 
+	int GetAniIdRacoon();
+
 public:
 	CMario(float x, float y) : CGameObject(x, y)
 	{
@@ -144,14 +177,14 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
-
+	int GetLevel() { return level; }
 	int IsCollidable()
 	{ 
 		return (state != MARIO_STATE_DIE); 
 	}
 
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
-
+	boolean IsAttack = false;
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 

@@ -25,11 +25,20 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_2:
 		mario->SetLevel(MARIO_LEVEL_BIG);
 		break;
+	case DIK_4:
+		mario->SetLevel(MARIO_LEVEL_RACOON);
+		break;
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);
 		break;
 	case DIK_R: // reset
 		//Reload();
+		break;
+	case DIK_A:
+		if (mario->GetLevel() == MARIO_LEVEL_RACOON) 
+		{
+			mario->SetState(MARIO_RACOON_ATTACK);
+		}
 		break;
 	}
 }
@@ -47,6 +56,11 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	case DIK_DOWN:
 		mario->SetState(MARIO_STATE_SIT_RELEASE);
 		break;
+	case DIK_A:
+		if (mario->GetLevel() == MARIO_LEVEL_RACOON) 
+		{
+			mario->SetState(MARIO_RACOON_ATTACK_RELEASE);
+		}
 	}
 }
 
