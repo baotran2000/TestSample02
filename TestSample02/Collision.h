@@ -81,6 +81,8 @@ public:
 		int filterX,
 		int filterY);
 
+	bool CheckAABB(LPGAMEOBJECT objA, LPGAMEOBJECT objB);
+	
 	void Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 
 	static CCollision* GetInstance();

@@ -34,7 +34,35 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isGoThroughBlock = false;
 	}
 
+	if (IsAttack) {
+		SetTail();
+	}
+	if (tail) {
+		tail->Update(dt, coObjects);
+	}
+	if (IsAttack && GetTickCount64() - attack_start > MARIO_RACCON_ATTACK_TIME_OUT) {
+		IsAttack = false;
+		attack_start = -1;
+		tail = NULL;
+	}
+
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
+void CMario::SetTail()
+{
+	if (!tail) {
+		tail = new CTail(x, y);
+	}
+	if (nx > 0)
+	{
+		tail->SetPosition(x - TAIL_BBOX_WIDTH / 2, y + POSITION_Y_OF_TAIL_MARIO / 2 - TAIL_BBOX_HEIGHT / 2);
+	}
+	else {
+		tail->SetPosition(x + MARIO_BIG_BBOX_WIDTH - TAIL_BBOX_WIDTH / 2, y + POSITION_Y_OF_TAIL_MARIO / 2 - TAIL_BBOX_HEIGHT / 2);
+	}
+	tail->SetWidth(TAIL_BBOX_WIDTH);
+	tail->SetHeight(TAIL_BBOX_HEIGHT);
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -293,19 +321,20 @@ int CMario::GetAniIdRacoon()
 			else
 				aniId = ID_ANI_RACOON_MARIO_SIT_LEFT;
 		}
+		else if (IsAttack) {
+			if (nx > 0) {
+				aniId = ID_ANI_RACOON_MARIO_ATTACK_FROM_LEFT;
+			}
+			else
+				aniId = ID_ANI_RACOON_MARIO_ATTACK_FROM_RIGHT;
+		}
 		else
 			if (vx == 0)
 			{
 				if (nx > 0) aniId = ID_ANI_RACOON_MARIO_IDLE_RIGHT;
 				else aniId = ID_ANI_RACOON_MARIO_IDLE_LEFT;
 			}
-			else if (IsAttack) {
-				if (nx > 0) {
-					aniId = ID_ANI_RACOON_MARIO_ATTACK_FROM_LEFT;
-				}
-				else
-					aniId = ID_ANI_RACOON_MARIO_ATTACK_FROM_RIGHT;
-			}
+
 			else if (vx > 0)
 			{
 				if (ax < 0)
@@ -344,6 +373,10 @@ void CMario::Render()
 		aniId = GetAniIdRacoon();
 
 	animations->Get(aniId)->Render(x, y);
+
+	if (tail) {
+		tail->Render();
+	}
 
 	//RenderBoundingBox();
 	
@@ -427,9 +460,7 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_RACOON_ATTACK:
 		IsAttack = true;
-		break;
-	case MARIO_RACOON_ATTACK_RELEASE:
-		IsAttack = false;
+		attack_start = GetTickCount64();
 		break;
 	}
 

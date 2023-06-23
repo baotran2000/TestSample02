@@ -4,6 +4,8 @@
 #include "Animation.h"
 #include "Animations.h"
 
+#include "Tail.h"
+
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.1f
@@ -16,7 +18,7 @@
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 
 #define MARIO_GRAVITY			0.0018f
-#define MARIO_JUMP_SPEED_MAX 0.28f
+#define MARIO_JUMP_SPEED_MAX 0.3f
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 
 #define MARIO_STATE_DIE				-10
@@ -132,6 +134,10 @@
 #define ADJUST_MARIO_COLLISION_WITH_COLOR_BLOCK 1
 #define MARIO_UNTOUCHABLE_TIME 2500
 
+#define MARIO_RACCON_ATTACK_TIME_OUT 500
+
+#define POSITION_Y_OF_TAIL_MARIO 18
+
 class CMario : public CGameObject
 {
 	BOOLEAN isSitting;
@@ -159,6 +165,8 @@ class CMario : public CGameObject
 	int GetAniIdRacoon();
 
 public:
+	CGameObject* obj = NULL;
+	CTail* tail;
 	CMario(float x, float y) : CGameObject(x, y)
 	{
 		isSitting = false;
@@ -173,6 +181,7 @@ public:
 		coin = 0;
 		this->x = x;
 		this->y = y;
+		tail = new CTail(x, y);
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -185,6 +194,9 @@ public:
 
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
 	boolean IsAttack = false;
+
+	void SetTail();
+
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
@@ -195,4 +207,8 @@ public:
 
 	int GetCoin() { return coin; }
 	void SetCoin(int _coin) { coin = _coin; }
+
+	//Countdown time
+	ULONGLONG attack_start = -1;
+	ULONGLONG transform_start = -1;
 };

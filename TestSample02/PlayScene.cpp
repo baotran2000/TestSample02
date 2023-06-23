@@ -129,7 +129,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 
 	case OBJECT_TYPE_QUESTION_BRICK: {
-		float type = (float)atof(tokens[3].c_str());
+		int type = (int)atof(tokens[3].c_str());
 		obj = new CQuestionBrick(x, y, type);
 		break;
 	}
