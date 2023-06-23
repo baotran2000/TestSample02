@@ -94,7 +94,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithBackgroundBlock(e);
 	else if (dynamic_cast<CQuestionBrick*>(e->obj))
 		OnCollisionWithQuestionBrick(e);
-	else if (dynamic_cast<CQuestionBrick*>(e->obj))
+	else if (dynamic_cast<CLeaf*>(e->obj))
 		OnCollisionWithLeaf(e);
 }
 
