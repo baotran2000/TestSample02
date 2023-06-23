@@ -1,4 +1,4 @@
-#include "CBGBlock.h"
+#include "BGBlock.h"
 
 CBGBlock::CBGBlock(float x, float y, float width, float height) :CGameObject(x, y)
 {
