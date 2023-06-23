@@ -8,6 +8,9 @@
 #include "Portal.h"
 #include "PlayScene.h"
 #include "Collision.h"
+#include "BGBlock.h"
+#include "QuestionBrick.h"
+#include "Leaf.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -24,6 +27,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 
 	isOnPlatform = false;
+
+	if (isGoThroughBlock) {
+		y -= ADJUST_MARIO_COLLISION_WITH_COLOR_BLOCK;
+		vy = -MARIO_JUMP_SPEED_MAX;
+		isGoThroughBlock = false;
+	}
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -53,6 +62,12 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+	else if (dynamic_cast<CBGBlock*>(e->obj))
+		OnCollisionWithBackgroundBlock(e);
+	else if (dynamic_cast<CQuestionBrick*>(e->obj))
+		OnCollisionWithQuestionBrick(e);
+	else if (dynamic_cast<CQuestionBrick*>(e->obj))
+		OnCollisionWithLeaf(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -99,6 +114,29 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+}
+
+void CMario::OnCollisionWithBackgroundBlock(LPCOLLISIONEVENT e)
+{
+	CBGBlock* block = dynamic_cast<CBGBlock*>(e->obj);
+	if (e->ny > 0) {
+		isGoThroughBlock = true;
+	}
+}
+
+void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
+{
+	CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
+	if (e->ny > 0 && !questionBrick->isEmpty) {
+		questionBrick->SetState(QUESTION_BRICK_STATE_UP);
+	}
+}
+
+void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
+{
+	DebugOut(L"-------------------------------------------------------");
+	//level = MARIO_LEVEL_RACOON;
+	e->obj->Delete();
 }
 
 //

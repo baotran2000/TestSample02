@@ -15,8 +15,8 @@
 #define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 
-#define MARIO_GRAVITY			0.002f
-
+#define MARIO_GRAVITY			0.0018f
+#define MARIO_JUMP_SPEED_MAX 0.28f
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 
 #define MARIO_STATE_DIE				-10
@@ -98,7 +98,7 @@
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
-
+#define ADJUST_MARIO_COLLISION_WITH_COLOR_BLOCK 1
 #define MARIO_UNTOUCHABLE_TIME 2500
 
 class CMario : public CGameObject
@@ -114,9 +114,13 @@ class CMario : public CGameObject
 	BOOLEAN isOnPlatform;
 	int coin; 
 
+	BOOLEAN isGoThroughBlock = false;
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
+	void OnCollisionWithBackgroundBlock(LPCOLLISIONEVENT e);
+	void OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -155,4 +159,7 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+
+	int GetCoin() { return coin; }
+	void SetCoin(int _coin) { coin = _coin; }
 };
