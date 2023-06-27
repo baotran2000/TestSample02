@@ -372,6 +372,7 @@ void CMario::Render()
 	else if (level == MARIO_LEVEL_RACOON)
 		aniId = GetAniIdRacoon();
 
+
 	animations->Get(aniId)->Render(x, y);
 
 	if (tail) {
