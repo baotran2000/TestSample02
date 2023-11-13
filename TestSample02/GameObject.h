@@ -25,6 +25,7 @@ protected:
 	float vy;
 
 	int nx;	 
+	int ny;
 
 	int state;
 
@@ -70,4 +71,13 @@ public:
 	~CGameObject();
 	int objType = 0;
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
+	bool checkObjectInCamera(CGameObject* obj);
+	int GetDirection() { return this->nx; }
+
+	int GetType() { return objType; }
+
+	void SetDirectionX(int nx) { this->nx = nx; }
+	void SetDirectionY(int ny) { this->ny = ny; }
+
+	void SetType(int type) { this->objType = type; }
 };

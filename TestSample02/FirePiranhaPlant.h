@@ -30,6 +30,27 @@
 #define FPP_BIG 1
 #define FPP_SMALL 2
 
+//DISTANCE
+#define DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO 75
+#define DISTANCE_SAFE_ZONE 25
+
+// SPEED
+#define FPP_SPEED 0.02f
+
+//  POSITION OF MARIO
+#define LEFT_TOP_SIDE_NEAR  1
+#define LEFT_TOP_SIDE_FAR  2
+#define LEFT_BOTTOM_SIDE_NEAR  3
+#define LEFT_BOTTOM_SIDE_FAR  4
+#define RIGHT_TOP_SIDE_NEAR  5
+#define RIGHT_TOP_SIDE_FAR  6
+#define RIGHT_BOTTOM_SIDE_NEAR  7
+#define RIGHT_BOTTOM_SIDE_FAR 8
+
+// TIME
+#define FPP_UP_TIME_OUT 4000
+#define FPP_DOWN_TIME_OUT 3000
+
 class FirePiranhaPlant :
 	public CGameObject
 {
@@ -38,11 +59,29 @@ protected:
 	float ay;
 
 	float minY;
+
+	float startY;
+	int marioRange = 0;
 public:
 	FirePiranhaPlant(float x, float y, int type);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
-	BOOLEAN isBottom = false;
+
+	virtual int IsCollidable() { return 1; };
+	virtual int IsBlocking() { return 0; }
+
+	virtual void OnNoCollision(DWORD dt);
+
+	bool GetSafeZone();
+	void ShootFire();
+
+	ULONGLONG down_start = -1;
+	ULONGLONG up_start = -1;
+	BOOLEAN isMarioSafeZone = false;
+	BOOLEAN startShoot = false, startDown = false;
+	BOOLEAN isBottom = false, isFar = false;
+
+	void GetMarioRangeCurrent();
 };
 

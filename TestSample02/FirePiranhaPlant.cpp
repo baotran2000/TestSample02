@@ -1,4 +1,8 @@
 #include "FirePiranhaPlant.h"
+#include "Mario.h"
+#include "PlayScene.h"
+
+
 FirePiranhaPlant::FirePiranhaPlant(float x, float y, int type)
 {
 	this->x = x;
@@ -6,6 +10,16 @@ FirePiranhaPlant::FirePiranhaPlant(float x, float y, int type)
 	this->objType = type;
 	this->ax = 0;
 	this->ay = 0;
+	this->startY = y;
+
+	if (objType == FPP_BIG) {
+		this->minY = y - FPP_BIG_BBOX_HEIGHT;
+	}
+	else {
+		this->minY = y - FPP_SMALL_BBOX_HEIGHT;
+	}
+
+	SetType(EType::ENEMY);
 }
 
 void FirePiranhaPlant::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -71,4 +85,31 @@ void FirePiranhaPlant::Render()
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
+}
+
+void FirePiranhaPlant::OnNoCollision(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+}
+
+bool FirePiranhaPlant::GetSafeZone()
+{
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	if (mario->GetX() < this->x)
+	{
+		if (this->x - mario->GetX() <= DISTANCE_SAFE_ZONE)
+		{
+			return true;
+		}
+	}
+	if (mario->GetX() > this->x)
+	{
+		if (mario->GetX() - this->x <= DISTANCE_SAFE_ZONE)
+		{
+			return true;
+		}
+	}
+	return false;
 }

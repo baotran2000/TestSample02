@@ -12,6 +12,7 @@
 #include "BGBlock.h"
 #include "QuestionBrick.h"
 #include "SampleKeyEventHandler.h"
+#include "FirePiranhaPlant.h"
 
 using namespace std;
 
@@ -126,6 +127,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+	case OBJECT_TYPE_FIRE_PIRANHA: {
+		int type = (int)atof(tokens[3].c_str());
+		obj = new FirePiranhaPlant(x, y, type);
+		break;
+	}
 	case OBJECT_TYPE_BLOCK: {
 		float width = (float)atof(tokens[3].c_str());
 		float height = (float)atof(tokens[4].c_str());

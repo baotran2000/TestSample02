@@ -1,4 +1,6 @@
 #include "Goomba.h"
+#include "Mario.h"
+#include "PlayScene.h"
 
 CGoomba::CGoomba(float x, float y, int type):CGameObject(x, y)
 {
@@ -7,6 +9,7 @@ CGoomba::CGoomba(float x, float y, int type):CGameObject(x, y)
 	die_start = -1;
 	this->objType = type;
 	SetState(GOOMBA_STATE_WALKING);
+	SetType(EType::ENEMY);
 }
 
 void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &bottom)

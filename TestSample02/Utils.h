@@ -13,6 +13,7 @@
 
 #include <fstream>
 #include <string>
+#include "AssetIDs.h"
 
 using namespace std;
 
@@ -20,3 +21,18 @@ vector<string> split(string line, string delimeter = "\t");
 wstring ToWSTR(string st);
 
 LPCWSTR ToLPCWSTR(string st);
+
+#define TYPE_MARIO 0
+#define TYPE_OBJECT 1
+#define TYPE_ENEMY 2
+#define TYPE_COIN 3
+#define TYPE_GOLDBRICK 4
+#define TYPE_COLOR_BLOCK 5
+enum EType {
+	MARIO = TYPE_MARIO,
+	OBJECT = TYPE_OBJECT,
+	ENEMY = TYPE_ENEMY,
+	COIN = TYPE_COIN,
+	GOLDBRICK = TYPE_GOLDBRICK,
+	COLORBLOCK = TYPE_COLOR_BLOCK,
+};
