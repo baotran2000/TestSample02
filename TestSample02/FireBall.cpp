@@ -36,3 +36,36 @@ FireBall::FireBall(float x, float y) :CGameObject(x, y)
 	this->ax = 0;
 	this->ay = FIRE_GRAVITY;
 }
+
+void FireBall::SetState(int state)
+{
+	CGameObject::SetState(state);
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	mario_dir = mario->GetCurrentDirection();//Get Mario's current direction
+
+	switch (state)
+	{
+	case FIRE_FROM_MARIO:
+		vx = mario_dir * FIRE_BALL_SPEED;
+		break;
+	case FIRE_BALL_STATE_FPP_SHOOT_NEAR:
+		vx = nx * FIRE_BALL_FPP_SHOOT_SPEED_X_NEAR;
+		vy = ny * FIRE_BALL_FPP_SHOOT_SPEED_Y;
+		isEnemyShoot = true;
+		ay = 0;
+		break;
+	case FIRE_BALL_STATE_FPP_SHOOT_FAR:
+		vx = nx * FIRE_BALL_FPP_SHOOT_SPEED_X_FAR;
+		vy = ny * FIRE_BALL_FPP_SHOOT_SPEED_Y;
+		isEnemyShoot = true;
+		ay = 0;
+		break;
+	case FIRE_BALL_DISAPPEAR:
+		vx = 0;
+		vy = 0;
+		ay = 0;
+		start_disappear = GetTickCount64();
+		isDisappear = true;
+		break;
+	}
+}
