@@ -9,8 +9,6 @@
 #define FIRE_GRAVITY 0.0006f
 #define FIRE_BALL_SPEED 0.15f
 
-#define FIRE_FROM_MARIO 100
-
 #define FIRE_BALL_STATE_FPP_SHOOT_NEAR 400
 #define FIRE_BALL_STATE_FPP_SHOOT_FAR 500
 
@@ -21,6 +19,8 @@
 #define FIRE_BALL_DISAPPEAR 300
 
 #define FIRE_BALL_DISAPPEAR_EFFECT_TIME_OUT 200
+
+#define ADJUST_FPP_SHOOT_FIRE_BALL_HEIGHT 10
 
 class FireBall :
 	public CGameObject
@@ -40,6 +40,8 @@ public:
 	BOOLEAN isEnemyShoot;
 	BOOLEAN isDisappear = false;
 	ULONGLONG start_disappear = -1;
+
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 };
 
 
