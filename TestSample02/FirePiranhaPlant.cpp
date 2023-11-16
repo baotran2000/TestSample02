@@ -142,3 +142,70 @@ void FirePiranhaPlant::ShootFire()
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 	scene->objects.push_back(fireBall);
 }
+
+void FirePiranhaPlant::GetMarioRangeCurrent()
+{
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	if (mario->GetX() < this->x && mario->GetY() < this->y)
+	{
+		if (this->x - mario->GetX() < DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = false;
+			isFar = false;
+			nx = -1;
+		}
+		if (this->x - mario->GetX() >= DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = false;
+			isFar = true;
+			nx = -1;
+		}
+	}
+	if (mario->GetX() < this->x && mario->GetY() > this->y)
+	{
+		if (this->x - mario->GetX() < DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = true;
+			isFar = false;
+			nx = -1;
+		}
+		if (this->x - mario->GetX() > DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = true;
+			isFar = true;
+			nx = -1;
+		}
+
+	}
+	if (mario->GetX() > this->x && mario->GetY() < this->y)
+	{
+		if (this->x - mario->GetX() < DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = false;
+			isFar = false;
+			nx = 1;
+		}
+		if (this->x - mario->GetX() >= DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = false;
+			isFar = true;
+			nx = 1;
+		}
+	}
+	if (mario->GetX() > this->x && mario->GetY() > this->y)
+	{
+		if (this->x - mario->GetX() < DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = true;
+			isFar = false;
+			nx = 1;
+		}
+		if (this->x - mario->GetX() >= DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = true;
+			isFar = true;
+			nx = 1;
+		}
+	}
+}
