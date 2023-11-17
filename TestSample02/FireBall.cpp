@@ -84,3 +84,8 @@ void FireBall::SetState(int state)
 		break;
 	}
 }
+
+int FireBall::IsCollidable()
+{
+		return 0;
+}

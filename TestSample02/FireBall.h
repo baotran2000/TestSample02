@@ -42,6 +42,7 @@ public:
 	ULONGLONG start_disappear = -1;
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	virtual int IsCollidable();
 };
 
 
