@@ -4,7 +4,7 @@
 #include "FireBall.h"
 
 
-FirePiranhaPlant::FirePiranhaPlant(float x, float y, int type)
+FirePiranhaPlant::FirePiranhaPlant(float x, float y, int type):CGameObject(x, y)
 {
 	this->x = x;
 	this->y = y;
@@ -41,12 +41,89 @@ void FirePiranhaPlant::GetBoundingBox(float& left, float& top, float& right, flo
 
 void FirePiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	/*
+	if (!checkObjectInCamera(this)) return;
+	vy += ay * dt;
+	vx += ax * dt;
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	if (state == ENEMY_STATE_IS_TAIL_ATTACKED) {
+		isDeleted = true;
+	}
+
+	if (y <= minY) {
+		y = minY;
+		down_start = GetTickCount64();
+		startShoot = true;
+	}
+	else if (y >= startY) {
+		y = startY;
+		up_start = GetTickCount64();
+		startDown = true;
+	}
+
+	if (GetTickCount64() - up_start > FPP_UP_TIME_OUT && startShoot) {
+		ShootFire();
+		startShoot = false;
+		vy = FPP_SPEED;
+		up_start = 0;
+	}
+
+	if (GetTickCount64() - down_start > FPP_DOWN_TIME_OUT && startDown && !GetSafeZone()) {
+		startDown = false;
+		vy = -FPP_SPEED;
+		down_start = 0;
+	}
+	*/
+	GetMarioRangeCurrent();
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void FirePiranhaPlant::Render()
 {
 	int aniId = ID_ANI_FPP_LEFT_BOTTOM;
-
+	if(startShoot)
+{
+	if (isBottom) {
+		if (objType == FPP_BIG) {
+			if (nx > 0) {
+				aniId = ID_ANI_FPP_RIGHT_BOTTOM_SHOOT;
+			}
+			else {
+				aniId = ID_ANI_FPP_LEFT_BOTTOM_SHOOT;
+			}
+		}
+		else {
+			if (nx > 0) {
+				aniId = ID_ANI_FPP_SMALL_RIGHT_BOTTOM_SHOOT;
+			}
+			else {
+				aniId = ID_ANI_FPP_SMALL_LEFT_BOTTOM_SHOOT;
+			}
+		}
+	}
+	else {
+		if (objType == FPP_BIG) {
+			if (nx > 0) {
+				aniId = ID_ANI_FPP_RIGHT_TOP_SHOOT;
+			}
+			else {
+				aniId = ID_ANI_FPP_LEFT_TOP_SHOOT;
+			}
+		}
+		else {
+			if (nx > 0) {
+				aniId = ID_ANI_FPP_SMALL_RIGHT_TOP_SHOOT;
+			}
+			else {
+				aniId = ID_ANI_FPP_SMALL_LEFT_TOP_SHOOT;
+			}
+		}
+	}
+}
+else
+{
 	if (isBottom) {
 		if (objType == FPP_BIG) {
 			if (nx > 0) {
@@ -83,7 +160,7 @@ void FirePiranhaPlant::Render()
 			}
 		}
 	}
-
+}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }

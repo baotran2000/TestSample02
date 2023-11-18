@@ -117,7 +117,7 @@
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
 
-#define MARIO_LEVEL_RACOON 4
+#define MARIO_LEVEL_RACOON 3
 
 #define MARIO_BIG_BBOX_WIDTH  14
 #define MARIO_BIG_BBOX_HEIGHT 24
@@ -158,6 +158,8 @@ class CMario : public CGameObject
 	void OnCollisionWithBackgroundBlock(LPCOLLISIONEVENT e);
 	void OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
+	void OnCollisionWithPiranha(LPCOLLISIONEVENT e);
+	void OnCollisionWithFireball(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -213,4 +215,6 @@ public:
 	//Countdown time
 	ULONGLONG attack_start = -1;
 	ULONGLONG transform_start = -1;
+	ULONGLONG die_start = -1;
+	void SetHurt();
 };

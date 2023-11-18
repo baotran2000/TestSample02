@@ -8,6 +8,7 @@
 #include "Animations.h"
 #include "Sprites.h"
 #include "Collision.h"
+#include "AssetIDs.h"
 
 using namespace std;
 
@@ -69,6 +70,7 @@ public:
 	virtual int IsBlocking() { return 1; }
 
 	~CGameObject();
+	int model = 0;
 	int objType = 0;
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
 	bool checkObjectInCamera(CGameObject* obj);
@@ -79,5 +81,6 @@ public:
 	void SetDirectionX(int nx) { this->nx = nx; }
 	void SetDirectionY(int ny) { this->ny = ny; }
 
-	void SetType(int type) { this->objType = type; }
+	void SetType(int type) { this->model = type; }
+	
 };

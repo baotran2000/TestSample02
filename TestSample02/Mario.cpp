@@ -11,6 +11,8 @@
 #include "BGBlock.h"
 #include "QuestionBrick.h"
 #include "Leaf.h"
+#include "FirePiranhaPlant.h"
+#include "FireBall.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -96,6 +98,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithQuestionBrick(e);
 	else if (dynamic_cast<CLeaf*>(e->obj))
 		OnCollisionWithLeaf(e);
+	else if (dynamic_cast<FirePiranhaPlant*>(e->obj))
+		OnCollisionWithPiranha(e);
+	else if (dynamic_cast<FireBall*>(e->obj))
+		OnCollisionWithFireball(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -165,6 +171,38 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 	DebugOut(L"-------------------------------------------------------");
 	//level = MARIO_LEVEL_RACOON;
 	e->obj->Delete();
+}
+
+void CMario::OnCollisionWithPiranha(LPCOLLISIONEVENT e)
+{
+	if (e->nx != 0 || e->ny != 0) {
+		SetHurt();
+	}
+}
+
+void CMario::OnCollisionWithFireball(LPCOLLISIONEVENT e)
+{
+	FireBall* fireball = dynamic_cast<FireBall*>(e->obj);
+	if (fireball->isEnemyShoot) {
+		SetHurt();
+	}
+}
+
+void CMario::SetHurt()
+{
+	if (untouchable == 0) {
+		if (level > MARIO_LEVEL_SMALL) {
+			level--;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+			die_start = GetTickCount64();
+		}
+	}
+	else return;
 }
 
 //
