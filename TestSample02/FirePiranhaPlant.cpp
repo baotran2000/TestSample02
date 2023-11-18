@@ -41,8 +41,8 @@ void FirePiranhaPlant::GetBoundingBox(float& left, float& top, float& right, flo
 
 void FirePiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	/*
-	if (!checkObjectInCamera(this)) return;
+	
+	//if (!checkObjectInCamera(this)) return;
 	vy += ay * dt;
 	vx += ax * dt;
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
@@ -50,7 +50,7 @@ void FirePiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (state == ENEMY_STATE_IS_TAIL_ATTACKED) {
 		isDeleted = true;
 	}
-
+	
 	if (y <= minY) {
 		y = minY;
 		down_start = GetTickCount64();
@@ -61,7 +61,7 @@ void FirePiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		up_start = GetTickCount64();
 		startDown = true;
 	}
-
+	
 	if (GetTickCount64() - up_start > FPP_UP_TIME_OUT && startShoot) {
 		ShootFire();
 		startShoot = false;
@@ -74,7 +74,7 @@ void FirePiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy = -FPP_SPEED;
 		down_start = 0;
 	}
-	*/
+	
 	GetMarioRangeCurrent();
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);

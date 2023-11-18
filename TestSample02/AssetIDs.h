@@ -20,6 +20,7 @@
 #define OBJECT_TYPE_PIRANHA 8
 #define OBJECT_TYPE_FIRE_PIRANHA 9
 #define OBJECT_TYPE_PORTAL	50
+#define OBJECT_TYPE_PIPE 77
 
 
 #pragma region MARIO 
