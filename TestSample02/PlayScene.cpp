@@ -14,6 +14,7 @@
 #include "SampleKeyEventHandler.h"
 #include "FirePiranhaPlant.h"
 #include "PiranhaPipe.h"
+#include "Koopas.h"
 
 using namespace std;
 
@@ -143,6 +144,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_QUESTION_BRICK: {
 		int type = (int)atof(tokens[3].c_str());
 		obj = new CQuestionBrick(x, y, type);
+		break;
+	}
+
+	case OBJECT_TYPE_KOOPAS: {
+		int type = (int)atof(tokens[3].c_str());
+		obj = new Koopas(x, y, type);
 		break;
 	}
 
