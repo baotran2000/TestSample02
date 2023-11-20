@@ -14,6 +14,19 @@
 #define ID_ANI_KOOPAS_GREEN_WING_RIGHT 40009
 #define ID_ANI_KOOPAS_GREEN_WING_LEFT 40010
 
+#define KOOPAS_STATE_WALKING 100
+#define KOOPAS_STATE_DEFEND 200
+#define KOOPAS_STATE_IS_KICKED 300
+#define KOOPAS_STATE_UPSIDE 400
+#define KOOPAS_STATE_JUMP 500
+
+#define KOOPAS_BOUNCE_SPEED 0.3f
+
+#define KOOPAS_WING_JUMP_SPEED 0.15f
+#define KOOPAS_WING_GRAVITY 0.0002f
+
+#define KOOPAS_WALKING_SPEED 0.02f
+
 class Koopas :
 	public CGameObject
 {	
@@ -28,5 +41,10 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void OnNoCollision(DWORD dt);
+
+	BOOLEAN isTailAttacked = false;
+
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithBackGroundBlock(LPCOLLISIONEVENT e);
 };
 
