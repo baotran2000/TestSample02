@@ -1,6 +1,8 @@
 #include "Koopas.h"
 #include "Utils.h"
 #include "BGBlock.h"
+#include "PlayScene.h"
+#include "Mario.h"
 
 Koopas::Koopas(float x, float y, int model) : CGameObject(x, y)
 {
@@ -8,18 +10,38 @@ Koopas::Koopas(float x, float y, int model) : CGameObject(x, y)
 	this->ay = KOOPAS_GRAVITY;
 	this->objType = model;
 	SetType(EType::ENEMY);
+	defend_start = -1;
+	isHeld = false;
+	if (model == KOOPAS_GREEN_WING) 
+	{
+		SetState(KOOPAS_STATE_JUMP);
+	}
+	else 
+	{
+		SetState(KOOPAS_STATE_WALKING);
+	}
 }
 
 void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x - KOOPAS_BBOX_WIDTH / 2;
-	top = y - KOOPAS_BBOX_HEIGHT / 2;
-	right = left + KOOPAS_BBOX_WIDTH;
-	bottom = top + KOOPAS_BBOX_HEIGHT;
+	if (isDefend || isUpside) {
+
+		left = x - KOOPAS_BBOX_WIDTH / 2;
+		top = y - KOOPAS_BBOX_HEIGHT_DEFEND / 2;
+		right = left + KOOPAS_BBOX_WIDTH;
+		bottom = top + KOOPAS_BBOX_HEIGHT_DEFEND;
+	}
+	else {
+		left = x - KOOPAS_BBOX_WIDTH / 2;
+		top = y - KOOPAS_BBOX_HEIGHT / 2;
+		right = left + KOOPAS_BBOX_WIDTH;
+		bottom = top + KOOPAS_BBOX_HEIGHT;
+	}
 }
 
 void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+
 }
 
 void Koopas::Render()

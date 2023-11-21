@@ -27,6 +27,13 @@
 
 #define KOOPAS_WALKING_SPEED 0.02f
 
+#define KOOPAS_BBOX_HEIGHT_DEFEND 16
+
+#define KOOPAS_DEFEND_TIMEOUT 8000
+#define KOOPAS_COMBACK_START 6000
+
+#define KOOPAS_COMBACK_HEIGHT_ADJUST 0.15f
+
 class Koopas :
 	public CGameObject
 {	
@@ -43,6 +50,12 @@ public:
 	virtual void OnNoCollision(DWORD dt);
 
 	BOOLEAN isTailAttacked = false;
+	BOOLEAN isHeld;
+	BOOLEAN isDefend;
+	BOOLEAN isUpside;
+
+
+	ULONGLONG defend_start;
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnCollisionWithBackGroundBlock(LPCOLLISIONEVENT e);
