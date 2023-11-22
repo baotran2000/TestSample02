@@ -84,5 +84,7 @@ public:
 	void SetType(int type) { this->model = type; }
 
 	int GetModel() { return model; }
+
+	bool isDeleted;
 	
 };
