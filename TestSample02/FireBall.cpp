@@ -35,11 +35,6 @@ void FireBall::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		SetState(FIRE_BALL_DISAPPEAR);
 	}
-
-	if (e->obj->GetType() == ENEMY) {
-		e->obj->SetState(ENEMY_STATE_IS_FIRE_ATTACKED);
-		SetState(FIRE_BALL_DISAPPEAR);
-	}
 }
 
 FireBall::FireBall(float x, float y) :CGameObject(x, y)
