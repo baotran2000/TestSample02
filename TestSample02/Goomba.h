@@ -17,9 +17,32 @@
 #define ID_RED_GOOMBA_WING_WALKING 5005
 #define ID_RED_GOOMBA_WALKING 5003
 #define ID_RED_GOOMBA_DIE 5004
+#define ID_RED_GOOMBA_WING_JUMP 5006
 
 #define NORMAL_GOOMBA 1
 #define RED_GOOMBA	2
+
+#define GOOMBA_RED_WING_STATE_WALKING 201
+#define GOOMBA_RED_WING_STATE_JUMP_LOW 202
+#define GOOMBA_RED_WING_STATE_JUMP_HIGH 203
+
+#define GOOMBA_RED_WING_BBOX_HEIGHT 16
+
+#define LIMIT_TIME_WING_WALKING 1000
+
+#define LIMIT_JUMP_STACK 3
+#define LIMIT_LOW_JUMP 0.25f
+#define LIMIT_HIGH_JUMP 0.4f
+
+#define ID_ANI_GOOMBA_IS_ATTACKED 30008
+#define IS_ATTACKED 900
+
+#define JUMP_LOW_SPEED 0.25f
+#define JUMP_HIGH_SPEED 0.4f
+
+#define GOOMBA_IS_ATTACK_SPEED_Y 0.3f
+#define GOOMBA_IS_ATTACK_SPEED_X 0.05f
+
 
 class CGoomba : public CGameObject
 {
@@ -28,12 +51,13 @@ protected:
 	float ay; 
 
 	ULONGLONG die_start;
+	ULONGLONG wing_walk_start;
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return 1; };
+	virtual int IsCollidable();
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 
@@ -42,4 +66,9 @@ protected:
 public: 	
 	CGoomba(float x, float y, int type);
 	virtual void SetState(int state);
+
+	BOOLEAN isOnPlatform;
+	BOOLEAN isWalking = false;
+	BOOLEAN isOnAir = false;
+	int jumpStack = 0;
 };
