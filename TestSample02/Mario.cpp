@@ -13,6 +13,7 @@
 #include "Leaf.h"
 #include "FirePiranhaPlant.h"
 #include "FireBall.h"
+#include "Koopas.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -102,6 +103,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPiranha(e);
 	else if (dynamic_cast<FireBall*>(e->obj))
 		OnCollisionWithFireball(e);
+	else if (dynamic_cast<Koopas*>(e->obj))
+		OnCollisionWithKoopas(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -217,6 +220,57 @@ void CMario::SetHurt()
 		}
 	}
 	else return;
+}
+
+void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
+{
+	Koopas* koopas = dynamic_cast<Koopas*>(e->obj);
+
+	if (e->ny < 0)
+	{
+		if (koopas->GetState() == KOOPAS_STATE_IS_KICKED) {
+			if (koopas->isDefend) {
+				koopas->SetState(KOOPAS_STATE_DEFEND);
+			}
+			else {
+				koopas->SetState(KOOPAS_STATE_UPSIDE);
+			}
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (koopas->GetState() == KOOPAS_STATE_WALKING)
+		{
+			koopas->SetState(KOOPAS_STATE_DEFEND);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (koopas->GetState() == KOOPAS_STATE_JUMP) {
+			koopas->SetState(KOOPAS_STATE_WALKING);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (koopas->GetState() == KOOPAS_STATE_DEFEND || koopas->GetState() == KOOPAS_STATE_UPSIDE)
+		{
+			koopas->SetState(KOOPAS_STATE_IS_KICKED);
+		}
+	}
+	else if (e->nx != 0)
+	{
+		if (koopas->GetState() == KOOPAS_STATE_DEFEND || koopas->GetState() == KOOPAS_STATE_UPSIDE) {
+			if (isRunning && !isHoldTurtle) {
+				isHoldTurtle = true;
+				isKicking = false;
+				koopas->isHeld = true;
+			}
+			else {
+				SetState(MARIO_STATE_KICK);
+				koopas->SetState(KOOPAS_STATE_IS_KICKED);
+			}
+		}
+		else {
+			SetHurt();
+		}
+	}
+	else if (e->ny > 0) {
+		SetHurt();
+	}
 }
 
 //

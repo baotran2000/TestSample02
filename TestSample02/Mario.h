@@ -32,6 +32,8 @@
 #define MARIO_STATE_RUNNING_RIGHT	400
 #define MARIO_STATE_RUNNING_LEFT	500
 
+#define MARIO_STATE_KICK 402
+
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
 
@@ -141,6 +143,10 @@
 class CMario : public CGameObject
 {
 	BOOLEAN isSitting;
+	BOOLEAN isRunning = false;
+	BOOLEAN isHoldTurtle = false;
+	BOOLEAN isKicking = false;
+
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -160,6 +166,7 @@ class CMario : public CGameObject
 	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
 	void OnCollisionWithPiranha(LPCOLLISIONEVENT e);
 	void OnCollisionWithFireball(LPCOLLISIONEVENT e);
+	void OnCollisionWithKoopas(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
