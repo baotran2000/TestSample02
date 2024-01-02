@@ -22,6 +22,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
+	if (vy <= -MARIO_JUMP_RUN_SPEED_Y && isRunningMax) 
+	{
+		vy = -MARIO_JUMP_RUN_SPEED_Y;
+		ay = MARIO_GRAVITY;
+	}
+	//change direction when run max speed
+	
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
@@ -30,6 +37,23 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 
 	isOnPlatform = false;
+
+	if (level == MARIO_LEVEL_BIG && GetTickCount64() - transform_start > MARIO_TRANSFORM_TIME_OUT && isTransform)
+	{
+		isTransform = false;
+		transform_start = -1;
+	}
+
+	if (level == MARIO_LEVEL_RACOON && GetTickCount64() - transform_start > MARIO_RACOON_TRANSFORM_TIME_OUT && isTransform)
+	{
+		isTransform = false;
+		transform_start = -1;
+	}
+
+	if (isTransform) {
+		ay = 0;
+		vx = 0;
+	}
 
 	if (isGoThroughBlock) {
 		y -= ADJUST_MARIO_COLLISION_WITH_COLOR_BLOCK;
