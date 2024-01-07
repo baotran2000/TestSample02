@@ -22,6 +22,8 @@
 #define MARIO_JUMP_SPEED_MAX 0.3f
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 
+#define MARIO_RACOON_FALL_SLOW_SPEED 0.03f
+
 #define MARIO_STATE_DIE				-10
 #define MARIO_STATE_IDLE			0
 #define MARIO_STATE_WALKING_RIGHT	100
@@ -40,6 +42,9 @@
 
 #define	MARIO_RACOON_ATTACK	800
 #define	MARIO_RACOON_ATTACK_RELEASE	801
+
+#define MARIO_RACOON_STATE_FALL_SLOW 802
+#define MARIO_RACOON_STATE_FLAPPING 803
 
 #pragma region ANIMATION_ID
 
@@ -88,6 +93,18 @@
 
 #define ID_ANI_RACOON_MARIO_ATTACK_FROM_LEFT 3200
 #define ID_ANI_RACOON_MARIO_ATTACK_FROM_RIGHT 3201
+
+#define ID_ANI_MARIO_RACCOON_FALL_RIGHT 12017
+#define ID_ANI_MARIO_RACCOON_FALL_LEFT 12018
+
+#define ID_ANI_MARIO_RACCOON_FLY_RIGHT 12025
+#define ID_ANI_MARIO_RACCOON_FLY_LEFT 12026
+
+#define ID_ANI_MARIO_RACCOON_FALL_FLY_RIGHT 12027
+#define ID_ANI_MARIO_RACCOON_FALL_FLY_LEFT	12028
+
+#define ID_ANI_MARIO_RACCOON_FALL_SLOW_RIGHT 12029
+#define ID_ANI_MARIO_RACCOON_FALL_SLOW_LEFT	12030
 
 #define ID_ANI_MARIO_DIE 999
 
@@ -151,16 +168,7 @@
 
 class CMario : public CGameObject
 {
-	BOOLEAN isSitting;
-	BOOLEAN isRunning = false;
-	BOOLEAN isHoldTurtle = false;
-	BOOLEAN isKicking = false;
-	BOOLEAN isRunningMax = false;
-	BOOLEAN isWalking = false;
-	BOOLEAN isFlying = false;
-	BOOLEAN isFlapping = false;
-	BOOLEAN canFallSlow = false;
-	BOOLEAN isTransform = false;
+
 
 	float maxVx;
 	float ax;				// acceleration on x 
@@ -189,6 +197,8 @@ class CMario : public CGameObject
 	int GetAniIdRacoon();
 
 public:
+
+
 	CGameObject* obj = NULL;
 	CTail* tail;
 	CMario(float x, float y) : CGameObject(x, y)
@@ -207,6 +217,19 @@ public:
 		this->y = y;
 		tail = new CTail(x, y);
 	}
+	BOOLEAN isSitting;
+	BOOLEAN isRunning = false;
+	BOOLEAN isHoldTurtle = false;
+	BOOLEAN isKicking = false;
+	BOOLEAN isRunningMax = false;
+	BOOLEAN isWalking = false;
+	BOOLEAN isFlying = false;
+	BOOLEAN isFlapping = false;
+	BOOLEAN canFallSlow = false;
+	BOOLEAN isTransform = false;
+	BOOLEAN isFallSlowing = false;
+	BOOLEAN isJumpRunMax;
+
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
