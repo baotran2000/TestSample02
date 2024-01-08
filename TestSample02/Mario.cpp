@@ -22,29 +22,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
-	//limit move x
-	if (abs(vx) > MARIO_WALKING_SPEED) {
-		if (!isRunning) {
-			vx = nx * MARIO_WALKING_SPEED;
-		}
-		else {
-			if (abs(vx) >= MARIO_RUNNING_SPEED) {
-				if (powerStack < MARIO_POWER_FULL) {
-					vx = nx * MARIO_RUNNING_SPEED;
-				}
-				else {
-					vx = nx * MARIO_RUNNING_MAX_SPEED;
-				}
-			}
-		}
-	}
-
-	//limit move y
-	if (vy <= -MARIO_JUMP_SPEED_MAX && !isRunningMax) {
-		vy = -MARIO_JUMP_SPEED_MAX;
-		ay = MARIO_GRAVITY;
-	}
-
 	if (vy <= -MARIO_JUMP_RUN_SPEED_Y && isRunningMax) 
 	{
 		vy = -MARIO_JUMP_RUN_SPEED_Y;
@@ -102,38 +79,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		tail = NULL;
 	}
 
-	if (GetTickCount64() - running_start > POWER_STACK_TIME && isRunning)
-	{
-		running_start = GetTickCount64();
-
-		DebugOut(L"[INFO] powerStack! %d \n", powerStack);
-		if (powerStack > MARIO_POWER_FULL)
-		{
-			powerStack = MARIO_POWER_FULL;
-			isRunningMax = true;
-		}
-		powerStack++;
-	}
-
-	if (GetTickCount64() - running_stop > POWER_STACK_LOST_TIME && powerStack && !isRunning)
-	{
-		running_stop = GetTickCount64();
-		isRunningMax = false;
-		powerStack--;
-		if (powerStack <= 0)
-		{
-			powerStack = 0;
-		}
-		DebugOut(L"[INFO] powerStack! %d \n", powerStack);
-	}
-
-	if (GetTickCount64() - flying_start > LIMIT_MARIO_RACCOON_FLY_TIME && isFlying)
-	{
-		isFlying = false;
-		isFlapping = false;
-		canFallSlow = true;
-		DebugOut(L"[INFO] mario raccoon fly time end\n");
-	}
+	
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -167,9 +113,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		if (e->ny < 0)
 		{
 			isOnPlatform = true;
-			isFlying = false;
-			canFallSlow = false;
-			isJumpRunMax = false;
 		}
 	}
 	else 
@@ -434,7 +377,7 @@ int CMario::GetAniIdBig()
 	int aniId = -1;
 	if (!isOnPlatform)
 	{
-		if (isJumpRunMax)
+		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
 			if (nx >= 0)
 				aniId = ID_ANI_MARIO_JUMP_RUN_RIGHT;
@@ -478,7 +421,7 @@ int CMario::GetAniIdBig()
 					aniId = ID_ANI_MARIO_BRACE_LEFT;
 				else if (ax == -MARIO_ACCEL_RUN_X)
 					aniId = ID_ANI_MARIO_RUNNING_LEFT;
-				else if (isJumpRunMax)
+				else if (ax == -MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_WALKING_LEFT;
 			}
 
@@ -495,47 +438,19 @@ int CMario::GetAniIdRacoon()
 	int aniId = -1;
 	if (!isOnPlatform)
 	{
-		if (isFlying && isFlapping) {
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_RACCOON_FLY_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_RACCOON_FLY_LEFT;
-		}
-		else if (isRunningMax)
+		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
 			if (nx >= 0)
 				aniId = ID_ANI_RACOON_MARIO_JUMP_RUN_RIGHT;
 			else
 				aniId = ID_ANI_RACOON_MARIO_JUMP_RUN_LEFT;
 		}
-		else if (!isRunningMax)
+		else 
 		{
 			if (nx >= 0)
 				aniId = ID_ANI_RACOON_MARIO_JUMP_WALK_RIGHT;
 			else
 				aniId = ID_ANI_RACOON_MARIO_JUMP_WALK_LEFT;
-		}
-		if (vy > 0) 
-		{
-			if (!isFlying) {
-				if (nx >= 0)
-					aniId = ID_ANI_MARIO_RACCOON_FALL_RIGHT;
-				else
-					aniId = ID_ANI_MARIO_RACCOON_FALL_LEFT;
-			}
-			else {
-				if (nx >= 0)
-					aniId = ID_ANI_MARIO_RACCOON_FALL_FLY_RIGHT;
-				else
-					aniId = ID_ANI_MARIO_RACCOON_FALL_FLY_LEFT;
-			}
-			if (isFallSlowing) 
-			{
-				if (nx >= 0)
-					aniId = ID_ANI_MARIO_RACCOON_FALL_SLOW_RIGHT;
-				else
-					aniId = ID_ANI_MARIO_RACCOON_FALL_SLOW_LEFT;
-			}
 		}
 	}
 	else
@@ -646,13 +561,7 @@ void CMario::SetState(int state)
 		{
 			if (abs(this->vx) == MARIO_RUNNING_SPEED)
 			{
-				isJumpRunMax = true;
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
-				if (level == MARIO_LEVEL_RACOON)
-				{
-					isFlying = true;
-					flying_start = GetTickCount64();
-				}
 			}
 			else
 				vy = -MARIO_JUMP_SPEED_Y;
@@ -696,10 +605,7 @@ void CMario::SetState(int state)
 		IsAttack = true;
 		attack_start = GetTickCount64();
 		break;
-	case MARIO_RACOON_STATE_FALL_SLOW:
-		isFallSlowing = true;
-		vy = -MARIO_RACOON_FALL_SLOW_SPEED;
-		break;
+
 	}
 
 	CGameObject::SetState(state);
