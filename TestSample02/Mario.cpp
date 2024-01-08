@@ -45,7 +45,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		ay = MARIO_GRAVITY;
 	}
 
-	if (vy <= -MARIO_JUMP_RUN_SPEED_Y && isJumpRunMax) 
+	if (vy <= -MARIO_JUMP_RUN_SPEED_Y && isRunningMax) 
 	{
 		vy = -MARIO_JUMP_RUN_SPEED_Y;
 		ay = MARIO_GRAVITY;
@@ -115,16 +115,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		powerStack++;
 	}
 
-	if (GetTickCount64() - running_stop > POWER_STACK_LOST_TIME && !isRunning)
+	if (GetTickCount64() - running_stop > POWER_STACK_LOST_TIME && powerStack && !isRunning)
 	{
 		running_stop = GetTickCount64();
 		isRunningMax = false;
-		DebugOut(L"[INFO] powerStack! %d \n", powerStack);
+		powerStack--;
 		if (powerStack <= 0)
 		{
 			powerStack = 0;
 		}
-		powerStack--;
+		DebugOut(L"[INFO] powerStack! %d \n", powerStack);
 	}
 
 	if (GetTickCount64() - flying_start > LIMIT_MARIO_RACCOON_FLY_TIME && isFlying)
@@ -751,5 +751,17 @@ void CMario::SetLevel(int l)
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 	}
 	level = l;
+}
+
+void CMario::Decelerate()
+{
+	if (vx > 0)
+	{
+		ax = -MARIO_DECELERATE_SPEED;
+	}
+	if (vx < 0)
+	{
+		ax = MARIO_DECELERATE_SPEED;
+	}
 }
 
