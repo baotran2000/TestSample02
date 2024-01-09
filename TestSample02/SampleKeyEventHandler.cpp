@@ -56,10 +56,21 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	case DIK_DOWN:
 		mario->SetState(MARIO_STATE_SIT_RELEASE);
 		break;
+	case DIK_RIGHT:
+		mario->SetState(MARIO_STATE_IDLE);
+		break;
+	case DIK_LEFT:
+		mario->SetState(MARIO_STATE_IDLE);
+		break;
 	case DIK_A:
 		if (mario->GetLevel() == MARIO_LEVEL_RACOON) 
 		{
 			mario->SetState(MARIO_RACOON_ATTACK_RELEASE);
+		}
+		if (mario->isHoldTurtle) 
+		{
+			mario->isHoldTurtle = false;
+			mario->SetState(MARIO_STATE_KICK);
 		}
 	}
 }

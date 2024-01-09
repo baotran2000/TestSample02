@@ -51,6 +51,28 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::SetState(state);
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
+	if (mario->isHoldTurtle) 
+	{
+		if (mario->GetDirection() > 0) 
+		{
+			x = mario->GetX() + KOOPAS_POSITION_ABSOLUTE_MARIO;
+			y = mario->GetY();
+		}
+		else {
+			x = mario->GetX() - KOOPAS_POSITION_ABSOLUTE_MARIO;
+			y = mario->GetY();
+		}
+		ay = 0;
+		isHeld = true;
+	}
+	else 
+	{
+		if (isHeld) 
+		{
+			SetState(KOOPAS_STATE_IS_KICKED);
+		}
+	}
+
 	// start animation comeback
 	if (GetTickCount64() - defend_start > KOOPAS_COMBACK_START && (isDefend || isUpside) && !isKicked) 
 	{
