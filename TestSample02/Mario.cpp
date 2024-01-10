@@ -293,7 +293,8 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		if (koopas->GetState() == KOOPAS_STATE_DEFEND || koopas->GetState() == KOOPAS_STATE_UPSIDE) {
-			if (isRunning && !isHoldTurtle) {
+			if (isRunning && !isHoldTurtle) 
+			{
 				isHoldTurtle = true;
 				isKicking = false;
 				koopas->isHeld = true;
@@ -366,7 +367,8 @@ int CMario::GetAniIdSmall()
 				else if (ax == -MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_SMALL_WALKING_LEFT;
 		}
-		else if (isHoldTurtle) {
+		else if (isHoldTurtle) 
+		{
 			if (vx == 0)
 			{
 				if (nx > 0) aniId = ID_ANI_MARIO_SMALL_HOLD_IDLE_RIGHT;
@@ -553,12 +555,14 @@ void CMario::SetState(int state)
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
 		nx = 1;
+		isRunning = true;
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		nx = -1;
+		isRunning = true;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
 		if (isSitting) break;

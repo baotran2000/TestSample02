@@ -51,7 +51,7 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::SetState(state);
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
-	if (mario->isHoldTurtle) 
+	if (mario->isHoldTurtle && isHeld)
 	{
 		if (mario->GetDirection() > 0) 
 		{
