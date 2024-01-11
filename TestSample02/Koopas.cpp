@@ -4,6 +4,7 @@
 #include "PlayScene.h"
 #include "Mario.h"
 #include "QuestionBrick.h"
+#include "Goomba.h"
 
 Koopas::Koopas(float x, float y, int model) : CGameObject(x, y)
 {

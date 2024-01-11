@@ -21,6 +21,7 @@ FirePiranhaPlant::FirePiranhaPlant(float x, float y, int type):CGameObject(x, y)
 	}
 
 	SetType(EType::ENEMY);
+
 }
 
 void FirePiranhaPlant::GetBoundingBox(float& left, float& top, float& right, float& bottom)

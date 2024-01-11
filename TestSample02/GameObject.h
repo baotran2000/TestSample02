@@ -29,6 +29,7 @@ protected:
 	int ny;
 
 	int state;
+	int type;
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
