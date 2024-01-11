@@ -330,10 +330,19 @@ int CMario::GetAniIdSmall()
 		}
 		else
 		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_LEFT;
+			if (isHoldTurtle) 
+			{
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_SMALL_HOLD_JUMP_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_SMALL_HOLD_JUMP_LEFT;
+			}
+			else {
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_LEFT;
+			}
 		}
 	}
 	else
@@ -405,10 +414,19 @@ int CMario::GetAniIdBig()
 		}
 		else
 		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_JUMP_WALK_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_JUMP_WALK_LEFT;
+			if (isHoldTurtle) 
+			{
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_HOLD_JUMP_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_HOLD_JUMP_LEFT;
+			}
+			else {
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_JUMP_WALK_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_JUMP_WALK_LEFT;
+			}
 		}
 	}
 	else
@@ -418,6 +436,20 @@ int CMario::GetAniIdBig()
 				aniId = ID_ANI_MARIO_SIT_RIGHT;
 			else
 				aniId = ID_ANI_MARIO_SIT_LEFT;
+		}
+		else if (isHoldTurtle) 
+		{
+			if (vx == 0)
+			{
+				if (nx > 0) aniId = ID_ANI_MARIO_HOLD_IDLE_RIGHT;
+				else aniId = ID_ANI_MARIO_HOLD_IDLE_LEFT;
+			}
+			else if (vx > 0) {
+				aniId = ID_ANI_MARIO_HOLD_WALK_RIGHT;
+			}
+			else {
+				aniId = ID_ANI_MARIO_HOLD_WALK_LEFT;
+			}
 		}
 		else
 			if (vx == 0)
@@ -466,10 +498,19 @@ int CMario::GetAniIdRacoon()
 		}
 		else 
 		{
-			if (nx >= 0)
-				aniId = ID_ANI_RACOON_MARIO_JUMP_WALK_RIGHT;
-			else
-				aniId = ID_ANI_RACOON_MARIO_JUMP_WALK_LEFT;
+			if (isHoldTurtle) 
+			{
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_RACCOON_HOLD_JUMP_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_RACCOON_HOLD_JUMP_LEFT;
+			}
+			else {
+				if (nx >= 0)
+					aniId = ID_ANI_RACOON_MARIO_JUMP_WALK_RIGHT;
+				else
+					aniId = ID_ANI_RACOON_MARIO_JUMP_WALK_LEFT;
+			}
 		}
 	}
 	else
@@ -486,6 +527,20 @@ int CMario::GetAniIdRacoon()
 			}
 			else
 				aniId = ID_ANI_RACOON_MARIO_ATTACK_FROM_RIGHT;
+		}
+		else if (isHoldTurtle) 
+		{
+			if (vx == 0)
+			{
+				if (nx > 0) aniId = ID_ANI_MARIO_RACCOON_HOLD_IDLE_RIGHT;
+				else aniId = ID_ANI_MARIO_RACCOON_HOLD_IDLE_LEFT;
+			}
+			else if (vx > 0) {
+				aniId = ID_ANI_MARIO_RACCOON_HOLD_WALK_RIGHT;
+			}
+			else {
+				aniId = ID_ANI_MARIO_RACCOON_HOLD_WALK_LEFT;
+			}
 		}
 		else
 			if (vx == 0)
