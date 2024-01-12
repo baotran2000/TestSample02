@@ -2,6 +2,7 @@
 #include "Mario.h"
 #include "PlayScene.h"
 
+
 CGoomba::CGoomba(float x, float y, int type):CGameObject(x, y)
 {
 	this->ax = 0;

@@ -4,7 +4,7 @@
 
 #define ENEMY_STATE_IS_ATTACKED 900
 
-enum EType 
+enum class EType 
 {
 	OBJECT = TYPE_OBJECT,
 	ENEMY = TYPE_ENEMY,

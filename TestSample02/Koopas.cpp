@@ -300,6 +300,10 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			vx = -vx;
 		}
+		if (e->obj->GetType() == ENEMY) 
+		{
+			e->obj->SetState(ENEMY_STATE_IS_KOOPAS_ATTACKED);
+		}
 	}
 
 	if (dynamic_cast<CBGBlock*>(e->obj))
@@ -343,7 +347,6 @@ void Koopas::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 		}
 	}
 }
-
 
 void Koopas::SetState(int state)
 {
@@ -400,5 +403,16 @@ void Koopas::SetState(int state)
 		vx = mario->GetDirection() * KOOPAS_SPEED_X_IS_TAIL_ATTACKED;
 		isTailAttacked = true;
 		break;
+	}
+}
+
+void Koopas::OnCollisionWithGoomba(LPCOLLISIONEVENT e) 
+{
+	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+	if (isKicked) {
+		if (e->nx != 0) 
+		{
+
+		}
 	}
 }

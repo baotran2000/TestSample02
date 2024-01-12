@@ -32,6 +32,7 @@ CQuestionBrick::CQuestionBrick(float x, float y, int type)
 	this->minY = y - QUESTION_BRICK_BBOX_HEIGHT;
 	this->startY = y;
 	this->startX = x;
+
 }
 void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
