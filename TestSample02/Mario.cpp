@@ -22,7 +22,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
-	if (vy <= -MARIO_JUMP_RUN_SPEED_Y && isRunningMax) 
+	if (vy <= -MARIO_JUMP_RUN_SPEED_Y && isRunningMax)
 	{
 		vy = -MARIO_JUMP_RUN_SPEED_Y;
 		ay = MARIO_GRAVITY;

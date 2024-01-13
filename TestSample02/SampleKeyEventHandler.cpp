@@ -82,14 +82,14 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
-		if (!mario->isRunning && game->IsKeyDown(DIK_A) && !mario->isHoldTurtle)
+		if (game->IsKeyDown(DIK_A) && !mario->isHoldTurtle)
 			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
 		else
 			mario->SetState(MARIO_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
-		if (!mario->isRunning && game->IsKeyDown(DIK_A) && !mario->isHoldTurtle)
+		if (game->IsKeyDown(DIK_A) && !mario->isHoldTurtle)
 			mario->SetState(MARIO_STATE_RUNNING_LEFT);
 		else
 			mario->SetState(MARIO_STATE_WALKING_LEFT);
