@@ -68,8 +68,9 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else 
 	{
-		if (isHeld) 
+		if (isHeld)
 		{
+			ay = KOOPAS_GRAVITY;
 			SetState(KOOPAS_STATE_IS_KICKED);
 		}
 	}
@@ -86,15 +87,6 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(KOOPAS_STATE_WALKING);
 		defend_start = -1;
 		vy = -KOOPAS_COMBACK_HEIGHT_ADJUST;
-	}
-
-	for (size_t i = 0; i < effects.size(); i++)
-	{
-		effects[i]->Update(dt, coObjects);
-		if (effects[i]->isDeleted) 
-		{
-			effects.erase(effects.begin() + i);
-		}
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -249,11 +241,6 @@ void Koopas::Render()
 		}
 	}
 
-	for (int i = 0; i < effects.size(); i++)
-	{
-		effects[i]->Render();
-	}
-
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 }
 
@@ -300,9 +287,14 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			vx = -vx;
 		}
-		if (e->obj->GetType() == ENEMY) 
+	}
+	if (e->obj->GetType() == ENEMY) {
+		if (e->obj->GetState() != ENEMY_STATE_IS_KOOPAS_ATTACKED) 
 		{
-			e->obj->SetState(ENEMY_STATE_IS_KOOPAS_ATTACKED);
+			if (state == KOOPAS_STATE_IS_KICKED) 
+			{
+				e->obj->SetState(ENEMY_STATE_IS_KOOPAS_ATTACKED);
+			}
 		}
 	}
 
@@ -327,12 +319,6 @@ void Koopas::OnCollisionWithBackGroundBlock(LPCOLLISIONEVENT e)
 				vy = 0;
 				vx = -KOOPAS_WALKING_SPEED;
 			}
-		}
-	}
-	if (e->nx != 0) {
-		if (state == KOOPAS_STATE_IS_KICKED) {
-			vx = -vx;
-			nx = -nx;
 		}
 	}
 }

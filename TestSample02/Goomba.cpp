@@ -205,8 +205,10 @@ void CGoomba::SetState(int state)
 			isOnPlatform = false;
 			isOnAir = true;
 			break;
+		case ENEMY_STATE_IS_KOOPAS_ATTACKED:
+			vy = -GOOMBA_IS_ATTACK_SPEED_Y;
+			break;
 		case ENEMY_STATE_IS_TAIL_ATTACKED:
-		case IS_ATTACKED:
 			vy = -GOOMBA_IS_ATTACK_SPEED_Y;
 			vx = mario->GetDirection() * GOOMBA_IS_ATTACK_SPEED_X;
 			break;
