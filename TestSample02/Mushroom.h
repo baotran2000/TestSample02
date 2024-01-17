@@ -13,6 +13,9 @@
 
 #define MUSHROOM_SPEED_UP 0.03f
 
+#define RED_MUSHROOM 1
+#define GREEN_MUSHROOM 2
+
 class CMushroom :
 	public CGameObject
 {
@@ -21,7 +24,7 @@ protected:
 	float ay;
 	float minY;
 public:
-	CMushroom(float x, float y);
+	CMushroom(float x, float y, int model);
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

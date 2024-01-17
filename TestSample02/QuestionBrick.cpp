@@ -65,7 +65,7 @@ void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			if (mario->GetLevel() == MARIO_LEVEL_SMALL)
 			{
-				CMushroom* mushroom = new CMushroom(x, y);
+				CMushroom* mushroom = new CMushroom(x, y, model);
 				mushroom->SetState(MUSHROOM_STATE_UP);
 				scene->objects.insert(scene->objects.begin() + 1, mushroom);
 			}

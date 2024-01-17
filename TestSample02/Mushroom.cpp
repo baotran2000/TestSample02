@@ -2,13 +2,14 @@
 #include "Mario.h"
 #include "PlayScene.h"
 
-CMushroom::CMushroom(float x, float y) : CGameObject(x, y)
+CMushroom::CMushroom(float x, float y, int model) : CGameObject(x, y)
 {
 	this->ay = 0;
 	this->ax = 0;
 	this->x = x;
 	this->y = y;
 	minY = y - MUSHROOM_BBOX_HEIGHT;
+	this->model = model;
 }
 
 void CMushroom::GetBoundingBox(float& left, float& top, float& right, float& bottom)
