@@ -86,6 +86,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		kick_start = -1;
 	}
 	
+	if (isAdjustHeight) 
+	{
+		y -= ADJUST_HEIGHT_MARIO_SMALL_TRANSFORM_BIG;
+		isAdjustHeight = false;
+	}
+
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -310,6 +316,7 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithMushRoom(LPCOLLISIONEVENT e)
 {
 		level = MARIO_LEVEL_BIG;
+		isAdjustHeight = true;
 		e->obj->Delete();
 }
 

@@ -190,6 +190,8 @@
 #define MARIO_TRANSFORM_TIME_OUT 1000
 #define MARIO_RACOON_TRANSFORM_TIME_OUT 500
 
+#define ADJUST_HEIGHT_MARIO_SMALL_TRANSFORM_BIG 10
+
 class CMario : public CGameObject
 {
 
@@ -254,6 +256,8 @@ public:
 	BOOLEAN isTransform = false;
 	BOOLEAN isFallSlowing = false;
 	BOOLEAN isJumpRunMax;
+	BOOLEAN isAdjustHeight = false; //adjust height when transform
+
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
