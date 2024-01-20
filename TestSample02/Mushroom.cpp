@@ -24,20 +24,12 @@ void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+
 	if (y <= minY)
 	{
 		SetState(MUSHROOM_STATE_RUN);
 	}
-	float sl, st, sr, sb, left, top, right, bottom;
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-	mario->GetBoundingBox(sl, st, sr, sb);
 
-	GetBoundingBox(left, top, right, bottom);
-
-	if (CCollision::IsOverlap(left, top, right, bottom, sl, st, sr, sb)) {
-		LPCOLLISIONEVENT e = new CCollisionEvent(0.01f, 0, -1, 0, 0, mario, this);
-		OnCollisionWith(e);
-	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -82,12 +74,5 @@ void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		vx = -vx;
-	}
-
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-	if (e->obj == mario) 
-	{
-		isDeleted = true;
-		mario->SetLevel(MARIO_LEVEL_BIG);
 	}
 }

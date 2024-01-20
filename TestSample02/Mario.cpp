@@ -14,6 +14,7 @@
 #include "FirePiranhaPlant.h"
 #include "FireBall.h"
 #include "Koopas.h"
+#include "Mushroom.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -144,6 +145,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithFireball(e);
 	else if (dynamic_cast<Koopas*>(e->obj))
 		OnCollisionWithKoopas(e);
+	else if (dynamic_cast<CMushroom*>(e->obj))
+		OnCollisionWithMushRoom(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -215,8 +218,7 @@ void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 {
-	DebugOut(L"-------------------------------------------------------");
-	//level = MARIO_LEVEL_RACOON;
+	level = MARIO_LEVEL_RACOON;
 	e->obj->Delete();
 }
 
@@ -231,6 +233,7 @@ void CMario::OnCollisionWithFireball(LPCOLLISIONEVENT e)
 {
 	FireBall* fireball = dynamic_cast<FireBall*>(e->obj);
 	if (fireball->isEnemyShoot) {
+		e->obj->Delete();
 		SetHurt();
 	}
 }
@@ -302,6 +305,12 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	else if (e->ny > 0) {
 		SetHurt();
 	}
+}
+
+void CMario::OnCollisionWithMushRoom(LPCOLLISIONEVENT e)
+{
+		level = MARIO_LEVEL_BIG;
+		e->obj->Delete();
 }
 
 //
