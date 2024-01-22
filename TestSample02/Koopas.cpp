@@ -302,6 +302,8 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithBackGroundBlock(e);
 	else if (dynamic_cast<CQuestionBrick*>(e->obj))
 		OnCollisionWithQuestionBrick(e);
+	else if (dynamic_cast<CGoomba*>(e->obj))
+		OnCollisionWithGoomba(e);
 }
 
 void Koopas::OnCollisionWithBackGroundBlock(LPCOLLISIONEVENT e)
@@ -321,6 +323,7 @@ void Koopas::OnCollisionWithBackGroundBlock(LPCOLLISIONEVENT e)
 			}
 		}
 	}
+
 }
 
 void Koopas::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
@@ -330,7 +333,15 @@ void Koopas::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 	if (e->nx != 0 && !questionBrick->isEmpty) {
 		if (state == KOOPAS_STATE_IS_KICKED) {
 			questionBrick->SetState(QUESTION_BRICK_STATE_UP);
+			vx = -vx;
 		}
+	}
+}
+
+void Koopas::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
+{
+	if (state == KOOPAS_STATE_IS_KICKED) {
+		e->obj->SetState(ENEMY_STATE_IS_KOOPAS_ATTACKED);
 	}
 }
 
@@ -392,13 +403,3 @@ void Koopas::SetState(int state)
 	}
 }
 
-void Koopas::OnCollisionWithGoomba(LPCOLLISIONEVENT e) 
-{
-	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-	if (isKicked) {
-		if (e->nx != 0) 
-		{
-
-		}
-	}
-}

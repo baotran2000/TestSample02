@@ -2,7 +2,7 @@
 
 #include "Sprite.h"
 #include "Sprites.h"
-
+#include "Utils.h"
 #include "Textures.h"
 
 void CPlatform::RenderBoundingBox()
@@ -45,6 +45,7 @@ void CPlatform::Render()
 		s->Get(this->spriteIdEnd)->Draw(xx, y);*/
 
 	//RenderBoundingBox();
+	SetType(EType::OBJECT);
 }
 
 void CPlatform::GetBoundingBox(float& l, float& t, float& r, float& b)
