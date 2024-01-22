@@ -21,7 +21,9 @@ effect.txt
 # MARIO
 #0	1424	10
 0	76	250
+#0	985	250
 #0	120	10
+
 #COIN
 4	1073	320
 4	1105	288
@@ -114,17 +116,17 @@ effect.txt
 2	528	337	1
 ##### PIRANHA PLANT 8 ######
 
-8	1800	360
+8	1800	392
 
 
 ##### FIRE PIRANHA PLANT 9 ######
 MODEL = 1 BIG FIREPIRANHA PLANT
 
-9	359	380	1
+9	359	382	1
 
 #MODEL = 2 SMALL FIREPIRANHA PLANT
 
-9	1864	343	2
+9	1864	375	2
 
 ############ PIPE 7 #############
 #model = 1 long pipe
