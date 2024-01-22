@@ -15,6 +15,8 @@
 #include "FirePiranhaPlant.h"
 #include "PiranhaPipe.h"
 #include "Koopas.h"
+#include "GoldBrick.h"
+#include "PiranhaPlant.h"
 
 using namespace std;
 
@@ -105,6 +107,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	int object_type = atoi(tokens[0].c_str());
 	float x = (float)atof(tokens[1].c_str());
 	float y = (float)atof(tokens[2].c_str());
+	int model = 0;
 
 	CGameObject *obj = NULL;
 
@@ -129,11 +132,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+	case OBJECT_TYPE_PIRANHA: obj = new CPiranhaPlant(x, y); break;
 	case OBJECT_TYPE_FIRE_PIRANHA: {
 		int type = (int)atof(tokens[3].c_str());
 		obj = new FirePiranhaPlant(x, y, type);
 		break;
 	}
+	case OBJECT_TYPE_GOLD_BRICK: obj = new GoldBrick(x, y, model); break;
 	case OBJECT_TYPE_BLOCK: {
 		float width = (float)atof(tokens[3].c_str());
 		float height = (float)atof(tokens[4].c_str());
