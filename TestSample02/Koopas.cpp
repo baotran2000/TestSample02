@@ -87,6 +87,12 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(KOOPAS_STATE_WALKING);
 		defend_start = -1;
 		vy = -KOOPAS_COMBACK_HEIGHT_ADJUST;
+
+		if (mario->isHoldTurtle) 
+		{
+			mario->isHoldTurtle = false;
+			mario->SetHurt();
+		}
 	}
 
 	CGameObject::Update(dt, coObjects);
