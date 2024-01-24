@@ -20,6 +20,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 
 	void OnCollisionWithQuestionBrick(LPGAMEOBJECT& e);
+	void OnCollisionWithEnemy(LPGAMEOBJECT& e);
 
 	CTail(float x, float y) {};
 };

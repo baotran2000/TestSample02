@@ -164,6 +164,7 @@
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="PButton.cpp" />
     <ClCompile Include="PiranhaPipe.cpp" />
+    <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Portal.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="PButton.h" />
     <ClInclude Include="PiranhaPipe.h" />
+    <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Portal.h" />

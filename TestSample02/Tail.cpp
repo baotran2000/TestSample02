@@ -1,12 +1,13 @@
 #include "Tail.h"
 #include "QuestionBrick.h"
+#include "PlayScene.h"
 
 void CTail::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x - width / 2;
-	right = left + width;
-	top = y - height / 2;
-	bottom = top + height;
+	left = x - 8;
+	right = x + 24;
+	top = y;
+	bottom = y + 5;
 }
 
 void CTail::Render()
@@ -21,6 +22,11 @@ void CTail::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (CCollision::GetInstance()->CheckAABB(this, coObjects->at(i))) {
 			if (dynamic_cast<CQuestionBrick*>(coObjects->at(i)))
 				OnCollisionWithQuestionBrick(coObjects->at(i));
+
+			else if (coObjects->at(i)->GetModel() == ENEMY) 
+			{
+				OnCollisionWithEnemy(coObjects->at(i));
+			}
 		}
 	}
 }
@@ -31,4 +37,9 @@ void CTail::OnCollisionWithQuestionBrick(LPGAMEOBJECT& e)
 	if (!questionBrick->isEmpty) {
 		questionBrick->SetState(QUESTION_BRICK_STATE_UP);
 	}
+}
+
+void CTail::OnCollisionWithEnemy(LPGAMEOBJECT& e)
+{
+	e->SetState(ENEMY_STATE_IS_TAIL_ATTACKED);
 }
