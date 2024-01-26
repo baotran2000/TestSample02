@@ -15,7 +15,7 @@
 #include "FirePiranhaPlant.h"
 #include "PiranhaPipe.h"
 #include "Koopas.h"
-#include "GoldBrick.h"
+
 #include "PiranhaPlant.h"
 
 using namespace std;
@@ -138,7 +138,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new FirePiranhaPlant(x, y, type);
 		break;
 	}
-	case OBJECT_TYPE_GOLD_BRICK: obj = new GoldBrick(x, y, model); break;
+	//case OBJECT_TYPE_GOLD_BRICK: obj = new GoldBrick(x, y, model); break;
 	case OBJECT_TYPE_BLOCK: {
 		float width = (float)atof(tokens[3].c_str());
 		float height = (float)atof(tokens[4].c_str());
@@ -355,11 +355,17 @@ void CPlayScene::SetCam(float cx, float cy)
 	if (cx >= mw - sw)//Right Edge
 		cx = (float)mw - (float)sw;
 
-	//cy -= sh /2 + MARIO_BIG_BBOX_HEIGHT;
-	cy = (float)mh - (float)sh;
+	//CamY
+	if (isTurnOnCamY)
+		cy -= (float)sh / 2;
+	else
+		cy = (float)mh - (float)sh;
 
-	if (cy <= 0)//Left Edge
-		cy = 0;
+	//Update CamY when Flying
+	if (player->isFlying)
+		isTurnOnCamY = true;
+	if (cy >= mh - sh && !player->isFlying)
+		isTurnOnCamY = false;
 
 	game->SetCamPos(cx, cy);
 	map->SetCamPos(cx, cy);
