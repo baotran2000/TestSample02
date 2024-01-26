@@ -25,3 +25,4 @@ height	240
 31	textures\enemies2.png
 32	textures\enemies3.png
 80	textures\world1-1.png
+50	textures\effect.png
