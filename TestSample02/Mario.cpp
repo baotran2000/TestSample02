@@ -15,6 +15,7 @@
 #include "FireBall.h"
 #include "Koopas.h"
 #include "Mushroom.h"
+#include "PiranhaPlant.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -256,6 +257,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CLeaf*>(e->obj))
 		OnCollisionWithLeaf(e);
 	else if (dynamic_cast<FirePiranhaPlant*>(e->obj))
+		OnCollisionWithPiranha(e);
+	else if (dynamic_cast<CPiranhaPlant*>(e->obj))
 		OnCollisionWithPiranha(e);
 	else if (dynamic_cast<FireBall*>(e->obj))
 		OnCollisionWithFireball(e);
