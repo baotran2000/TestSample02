@@ -111,7 +111,7 @@ void Koopas::Render()
 			aniId = ID_ANI_KOOPAS_GREEN_WING_LEFT;
 		}
 	}
-	if (model == KOOPAS_GREEN || model == KOOPAS_GREEN_WING)
+	if (objType == KOOPAS_GREEN || objType == KOOPAS_GREEN_WING)
 	{
 		if (state == ENEMY_STATE_IS_KOOPAS_ATTACKED || state == ENEMY_STATE_IS_TAIL_ATTACKED) {
 			aniId = ID_ANI_KOOPAS_IS_UPSIDE;
@@ -178,7 +178,7 @@ void Koopas::Render()
 			}
 		}
 	}
-	else if (model == KOOPAS_RED)
+	else if (objType == KOOPAS_RED)
 	{
 		if (state == ENEMY_STATE_IS_KOOPAS_ATTACKED || state == ENEMY_STATE_IS_TAIL_ATTACKED) 
 		{
