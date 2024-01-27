@@ -2,7 +2,6 @@
 #include "GoldBrick.h"
 #include "PlayScene.h"
 #include "MushRoom.h"
-#include "GoldBrick.h"
 
 PButton::PButton(float x, float y) :CGameObject(x, y)
 {
@@ -42,16 +41,14 @@ int PButton::IsBlocking() {
 
 void PButton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
-	if (isAdjustHeight) {
-		y = y + (P_BUTTON_BBOX_HEIGHT - P_BUTTON_IS_PRESSED_BBOX_HEIGHT);
-		isAdjustHeight = false;
-	}
-
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 
-	if (isPressed) {
-		for (size_t i = 0; i < scene->objects.size(); i++) {
+	if (isGoldBrickTransform) 
+	{
+		y = y + (P_BUTTON_BBOX_HEIGHT - P_BUTTON_IS_PRESSED_BBOX_HEIGHT);
+
+		for (size_t i = 0; i < scene->objects.size(); i++) 
+		{
 			if (scene->objects[i]->GetType() == GOLDBRICK) {
 				GoldBrick* goldbrick = dynamic_cast<GoldBrick*>(scene->objects[i]);
 				if (goldbrick->GetModel() == GOLD_BRICK_COIN) {
@@ -59,6 +56,7 @@ void PButton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 		}
+		isGoldBrickTransform = false;
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -74,5 +72,5 @@ void PButton::Render()
 		aniId = ID_ANI_P_BUTTON_IS_PRESSED;
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }

@@ -15,7 +15,7 @@ protected:
 	float ay;
 
 	BOOLEAN isPressed = false;
-	BOOLEAN isAdjustHeight = false;
+	BOOLEAN isGoldBrickTransform = false;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -27,6 +27,6 @@ protected:
 public:
 	PButton(float x, float y);
 	void SetIsPressed(BOOLEAN isPressed) { this->isPressed = isPressed; }
-	void SetIsAdjustHeight(BOOLEAN isAdjustHeight) { this->isAdjustHeight = isAdjustHeight; }
+	void SetGoldBrickTransform(BOOLEAN isGoldBrickTransform) { this->isGoldBrickTransform = isGoldBrickTransform; }
 };
 
