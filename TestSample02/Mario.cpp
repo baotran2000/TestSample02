@@ -16,6 +16,8 @@
 #include "Koopas.h"
 #include "Mushroom.h"
 #include "PiranhaPlant.h"
+#include "GoldBrick.h"
+#include "PButton.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -266,6 +268,26 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithKoopas(e);
 	else if (dynamic_cast<CMushroom*>(e->obj))
 		OnCollisionWithMushRoom(e);
+	else if (dynamic_cast<GoldBrick*>(e->obj))
+		OnCollisionWithGoldBrick(e);
+	else if (dynamic_cast<PButton*>(e->obj))
+		OnCollisionWithPButton(e);
+}
+
+void CMario::OnCollisionWithGoldBrick(LPCOLLISIONEVENT e) {
+	GoldBrick* goldBrick = dynamic_cast<GoldBrick*>(e->obj);
+	if (e->ny > 0 && !goldBrick->isEmpty) {
+		goldBrick->SetState(GOLD_BRICK_STATE_UP);
+	}
+}
+
+void CMario::OnCollisionWithPButton(LPCOLLISIONEVENT e)
+{
+	PButton* button = dynamic_cast<PButton*>(e->obj);
+	if (e->ny < 0) {
+		button->SetIsPressed(true);
+		button->SetGoldBrickTransform(true);
+	}
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
