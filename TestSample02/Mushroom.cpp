@@ -38,7 +38,13 @@ void CMushroom::Render()
 {
 	int aniId = -1;
 
-	aniId = ID_ANI_MUSHROOM;
+	if (model == GREEN_MUSHROOM) 
+	{
+		aniId = ID_ANI_GREEN_MUSHROOM;
+	}
+	else {
+		aniId = ID_ANI_RED_MUSHROOM;
+	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();

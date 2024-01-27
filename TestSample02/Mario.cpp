@@ -428,9 +428,17 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithMushRoom(LPCOLLISIONEVENT e)
 {
-		level = MARIO_LEVEL_BIG;
+	if (e->obj->GetModel() == RED_MUSHROOM)
+	{
 		isAdjustHeight = true;
+		level = MARIO_LEVEL_BIG;
 		e->obj->Delete();
+	}
+	else if (e->obj->GetModel() == GREEN_MUSHROOM)
+	{
+		//1 UP
+		e->obj->Delete();
+	}
 }
 
 //
