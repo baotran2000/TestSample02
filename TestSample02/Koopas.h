@@ -98,5 +98,6 @@ public:
 	void OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e);
 	virtual void SetState(int state);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithGoldBrick(LPCOLLISIONEVENT e);
 };
 

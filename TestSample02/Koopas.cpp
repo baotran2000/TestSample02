@@ -5,6 +5,7 @@
 #include "Mario.h"
 #include "QuestionBrick.h"
 #include "Goomba.h"
+#include "GoldBrick.h"
 
 Koopas::Koopas(float x, float y, int model) : CGameObject(x, y)
 {
@@ -310,6 +311,40 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithQuestionBrick(e);
 	else if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
+	else if (dynamic_cast<GoldBrick*>(e->obj))
+		OnCollisionWithGoldBrick(e);
+}
+
+void Koopas::OnCollisionWithGoldBrick(LPCOLLISIONEVENT e)
+{
+	GoldBrick* goldbrick = dynamic_cast<GoldBrick*>(e->obj);
+
+	if (e->nx != 0 && goldbrick->GetType() == GOLD_BRICK_COIN) 
+	{
+		if (goldbrick->GetState() != GOLD_BRICK_STATE_TRANSFORM_COIN) 
+		{
+			if (state == KOOPAS_STATE_IS_KICKED) 
+			{
+				goldbrick->SetBreak(true);
+			}
+		}
+	}
+
+	if (model == KOOPAS_RED) {
+		if (e->ny < 0) {
+			if (state == KOOPAS_STATE_WALKING && model == KOOPAS_RED) {
+				if (x <= goldbrick->GetX() - ADJUST_X_TO_RED_CHANGE_DIRECTION)
+				{
+					vy = 0;
+					vx = KOOPAS_WALKING_SPEED;
+				}
+				else if (x >= goldbrick->GetX() + ADJUST_X_TO_RED_CHANGE_DIRECTION) {
+					vy = 0;
+					vx = -KOOPAS_WALKING_SPEED;
+				}
+			}
+		}
+	}
 }
 
 void Koopas::OnCollisionWithBackGroundBlock(LPCOLLISIONEVENT e)

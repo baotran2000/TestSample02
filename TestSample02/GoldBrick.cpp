@@ -6,7 +6,7 @@
 
 GoldBrick::GoldBrick(float x, float y, int model) :CGameObject(x, y)
 {
-	this->model = model;
+	this->objType = model;
 
 	this->ay = 0;
 	this->ax = 0;
@@ -43,7 +43,7 @@ void GoldBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy = GOLD_BRICK_SPEED_DOWN;
 		if (mario->GetLevel() != MARIO_LEVEL_SMALL) 
 		{
-			if (model == GOLD_BRICK_COIN) {
+			if (objType == GOLD_BRICK_COIN) {
 				isBreak = true;
 			}
 		}
@@ -63,12 +63,12 @@ void GoldBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (isUnbox) 
 	{
-		if (model == GOLD_BRICK_MUSHROOM) {
+		if (objType == GOLD_BRICK_MUSHROOM) {
 			CMushroom* mushroom = new CMushroom(x, y, GREEN_MUSHROOM);
 			mushroom->SetState(MUSHROOM_STATE_UP);
 			scene->objects.insert(scene->objects.begin() + 1, mushroom);
 		}
-		if (model == GOLD_BRICK_P_BUTTON) {
+		if (objType == GOLD_BRICK_P_BUTTON) {
 			PButton* button = new PButton(x, y - P_BUTTON_BBOX_HEIGHT);
 			scene->objects.insert(scene->objects.begin() + 1, button);
 		}
@@ -118,7 +118,7 @@ void GoldBrick::Render()
 {
 	int aniId = ID_ANI_GOLD_BRICK;
 
-	if (model != GOLD_BRICK_COIN) {
+	if (objType != GOLD_BRICK_COIN) {
 		if (isEmpty) {
 			aniId = ID_ANI_GOLD_BRICK_EMPTY;
 		}
