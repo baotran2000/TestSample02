@@ -321,6 +321,23 @@ void CPlayScene::Update(DWORD dt)
 		objects[i]->Update(dt, &coObjects);
 	}
 
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		if (dynamic_cast<GoldBrick*>(objects[i]) && CGame::GetInstance()->transform) {
+
+			if (!objects[i]->isDeleted) {
+				float x = objects[i]->GetX();
+				float y = objects[i]->GetY();
+				objects[i]->Delete();
+				CCoin* coin = new CCoin(x, y);
+				objects.push_back(coin);
+			}
+		}
+
+		objects[i]->Update(dt, &coObjects);
+
+	}
+
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return; 
 

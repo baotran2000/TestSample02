@@ -47,15 +47,7 @@ void PButton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		y = y + (P_BUTTON_BBOX_HEIGHT - P_BUTTON_IS_PRESSED_BBOX_HEIGHT);
 
-		for (size_t i = 0; i < scene->objects.size(); i++) 
-		{
-			if (scene->objects[i]->GetType() == GOLDBRICK) {
-				GoldBrick* goldbrick = dynamic_cast<GoldBrick*>(scene->objects[i]);
-				if (goldbrick->GetModel() == GOLD_BRICK_COIN) {
-					goldbrick->SetState(GOLD_BRICK_STATE_TRANSFORM_COIN);
-				}
-			}
-		}
+		CGame::GetInstance()->transform = true;
 		isGoldBrickTransform = false;
 	}
 
